@@ -1,0 +1,19 @@
+name: mysite
+recipe: drupal7
+config:
+  webroot: docroot
+  xdebug: true
+services:
+  database:
+    creds:
+      user: drupal
+      password: drupal
+      database: drupal
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+    portforward: 1026
+proxy:
+  mailhog:
+    - mailhog.mysite.lndo.site

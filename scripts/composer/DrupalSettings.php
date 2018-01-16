@@ -15,13 +15,13 @@ class DrupalSettings {
    */
   public static function create(Event $event) {
     $defaults = [
-      'mysql_database' => 'beetbox',
-      'mysql_user' => 'beetbox',
-      'mysql_password' => 'beetbox',
+      'mysql_database' => 'drupal',
+      'mysql_user' => 'drupal',
+      'mysql_password' => 'drupal',
       'mysql_host' => 'localhost',
       'mysql_port' => '',
       'mysql_prefix' => '',
-      'settings_path' => 'docroot/sites/default/settings.beetbox.php',
+      'settings_path' => 'docroot/sites/default/settings.db.php',
     ];
 
     $options = self::extractEnvironmentVariables(array_keys($defaults))
@@ -43,7 +43,7 @@ class DrupalSettings {
    */
   public static function delete(Event $event) {
     $defaults = [
-      'settings_path' => 'docroot/sites/default/settings.beetbox.php',
+      'settings_path' => 'docroot/sites/default/settings.db.php',
     ];
 
     $options = self::extractEnvironmentVariables(array_keys($defaults))

@@ -101,7 +101,7 @@
     "test": "behat --format=progress_fail --colors",
     "build": [
       "@composer install -n --ansi --prefer-dist",
-      "@_start-vm",
+      "@_start-env",
       "@build-db"
     ],
     "rebuild": [
@@ -126,15 +126,12 @@
     ],
     "cleanup-full": [
       "@cleanup",
-      "@_remove-vm"
+      "@_remove-env"
     ],
     "deploy": "robo --ansi --load-from $(pwd)/vendor/integratedexperts/robo-git-artefact/RoboFile.php artefact --gitignore=.gitignore.artefact",
-    "_start-vm": "if [ $(command -v vagrant) ] ; then vagrant up; fi",
-    "_remove-vm": [
-      "vagrant destroy -f || true",
-      "rm -Rf .vagrant",
-      "rm -Rf .beetbox",
-      "rm -Rf Vagrantfile"
+    "_start-env": "lando start",
+    "_remove-env": [
+      "lando destroy -y"
     ],
     "_remove-dependencies": [
       "rm -Rf vendor",
@@ -184,15 +181,6 @@
       "docroot/sites/default/default.settings.local.php",
       "docroot/sites/default/files"
     ],
-    "beetbox": {
-      "beet_domain": "local.mysiteurl",
-      "beet_root": "{{ beet_base }}/docroot",
-      "php_version": "7.1",
-      "php_mysql_package": "php7.1-mysql",
-      "php_packages_state": "latest",
-      "php_install_recommends": "yes",
-      "php_date_timezone": "Australia/Melbourne"
-    },
     "mouf": {
       "nodejs": {
         "forceLocal": true

@@ -21,15 +21,10 @@ docroot/sites/default/*
 !docroot/sites/default/settings.php
 !docroot/sites/default/default.settings.local.php
 
-# Ignore local VM files.
-.vagrant
-Vagrantfile
-.beetbox
-.data
-
 # Ignore dependencies cache files
 vendor
 node_modules
+.data
 
 # Compiled assets.
 docroot/sites/all/themes/**/build

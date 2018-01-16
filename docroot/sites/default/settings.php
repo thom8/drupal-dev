@@ -56,9 +56,9 @@ if (file_exists('/var/www/site-php')) {
   }
 }
 
-// Include generated beetbox settings file, if available.
-if (file_exists(DRUPAL_ROOT . '/' . conf_path() . '/settings.beetbox.php')) {
-  include DRUPAL_ROOT . '/' . conf_path() . '/settings.beetbox.php';
+// Include generated DB settings file, if available.
+if (file_exists(DRUPAL_ROOT . '/' . conf_path() . '/settings.db.php')) {
+  include DRUPAL_ROOT . '/' . conf_path() . '/settings.db.php';
 }
 
 // Load local development override configuration, if available.
