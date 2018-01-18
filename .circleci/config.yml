@@ -2,54 +2,46 @@ version: 2
 jobs:
   build:
     docker:
-      - image: geerlingguy/drupal-vm
-        volumes:
-          - ./:/var/www/drupalvm/:rw,delegated
-#
-#        environment:
-#          COMPOSER_ALLOW_SUPERUSER: 1
-#          CIRCLE_DOCKER_RUN_ARGUMENTS: "-v /var/run/docker.sock:/var/run/docker.sock"
+      - image: php:7.2-cli
+        environment:
+          COMPOSER_ALLOW_SUPERUSER: 1
+          CIRCLE_DOCKER_RUN_ARGUMENTS: "-v /var/run/docker.sock:/var/run/docker.sock"
     working_directory: /app
 #    parallelism: 2
     steps:
       - checkout
-#      - setup_remote_docker:
-#          docker_layer_caching: true
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Setup docker
           command: |
+            apt update
+            apt install apt-transport-https ca-certificates curl software-properties-common gnupg vim -y
+            curl -sL https://deb.nodesource.com/setup_9.x | bash -
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+            add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu artful stable"
+            apt update
+            apt install docker-ce -y
             apt-get -y install cgroup-bin curl iptables git
-#            apt update
-#            apt install apt-transport-https ca-certificates curl software-properties-common gnupg vim -y
-#            curl -sL https://deb.nodesource.com/setup_9.x | bash -
-#            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-#            add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu artful stable"
-#            apt update
-#            apt install docker-ce -y
-#
-#      - run:
-#          name: Install nodejs
-#          command: |
-#            apt-get -y install nodejs
-#            apt-get -y install npm
-#            nodejs -v
-#
-#      - run:
-#          name: Install lando
-#          command: |
-#            apt-get -y update
-#            apt-get -y install cgroup-bin curl iptables
-#            git clone https://github.com/lando/lando.git
-#            cd lando && npm install
-#            mkdir -p /usr/local/bin
-#            ln -s /app/lando/bin/lando.js /usr/local/bin/lando.dev
-#
+
+      - run:
+          name: Install nodejs
+          command: |
+            apt-get -y install nodejs
+            apt-get -y install npm
+            nodejs -v
+
+      - run:
+          name: Install lando
+          command: |
+            apt-get -y update
+            apt-get -y install cgroup-bin curl iptables
+            git clone https://github.com/lando/lando.git
+            cd lando && npm install
+            mkdir -p /usr/local/bin
+            ln -s /app/lando/bin/lando.js /usr/local/bin/lando.dev
+
       - run: env >> .env
-#      - run: |
-#          curl -L http://github.com/docker/compose/releases/download/1.13.0/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
-#          chmod +x /usr/local/bin/docker-compose
-#      - run: docker-compose up -d
-      - run: curl http://192.168.89.89
 
 #            apt-get -y install cgroup-bin curl iptables
 #            curl -fsSL -o /tmp/lando-latest.deb http://installer.kalabox.io/lando-latest-dev.deb
