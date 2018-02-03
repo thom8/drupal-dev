@@ -4,17 +4,17 @@ services:
     environment:
       LAGOON_ENVIRONMENT_TYPE: 'ci'
     volumes:
-      - .:/app/docroot/sites/default/files
+      - .:/app:delegated
   php:
     environment:
       LAGOON_ENVIRONMENT_TYPE: 'ci'
     volumes:
-      - .:/app/docroot/sites/default/files
+      - .:/app:delegated
   nginx:
     environment:
       LAGOON_ENVIRONMENT_TYPE: 'ci'
     volumes:
-      - .:/app/docroot/sites/default/files
+      - .:/app:delegated
   selenium:
     image: selenium/standalone-chrome
     depends_on:

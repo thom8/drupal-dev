@@ -29,11 +29,6 @@ jobs:
           command: |
             composer drupal:build
             composer docker:cli -- mkdir -p /app/screenshots
-      - run:
-          name: Install dev dependencies.
-          command: |
-            composer docker:cli -- composer install --ansi
-            composer docker:cli -- npm install
 #            sleep 10 # wait for mariadb to startup
 #      - run:
 #          name: Site setup.
@@ -46,22 +41,22 @@ jobs:
 #            composer docker:cli -- composer install --ansi
       - run:
           name: Lint code.
-          command: composer docker:cli -- composer drupal:cs
-      - run:
-          name: Run tests.
-          command: |
-            if [ "$CIRCLE_NODE_TOTAL" -gt "1" ] ; then
-              composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --profile=p$CIRCLE_NODE_INDEX || composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --profile=p$CIRCLE_NODE_INDEX --rerun
-            else
-              composer docker:cli -- vendor/bin/behat --format=progress_fail --colors || composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --rerun
-            fi
-      - run:
-          name: Copy artifacts.
-          command: |
-            mkdir -p /tmp/artifacts/behat
-            docker cp $(docker-compose ps -q cli):/app/screenshots /tmp/artifacts/behat
-      - store_artifacts:
-          path: /tmp/artifacts
+          command: composer drupal:cs
+#      - run:
+#          name: Run tests.
+#          command: |
+#            if [ "$CIRCLE_NODE_TOTAL" -gt "1" ] ; then
+#              composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --profile=p$CIRCLE_NODE_INDEX || composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --profile=p$CIRCLE_NODE_INDEX --rerun
+#            else
+#              composer docker:cli -- vendor/bin/behat --format=progress_fail --colors || composer docker:cli -- vendor/bin/behat --format=progress_fail --colors --rerun
+#            fi
+#      - run:
+#          name: Copy artifacts.
+#          command: |
+#            mkdir -p /tmp/artifacts/behat
+#            docker cp $(docker-compose ps -q cli):/app/screenshots /tmp/artifacts/behat
+#      - store_artifacts:
+#          path: /tmp/artifacts
 
 
 #
